@@ -1,2 +1,0 @@
-certbot /FROM certbot\/certbot:(v[\d.]+)/ docker:certbot/certbot|^1
-Dockerfile
