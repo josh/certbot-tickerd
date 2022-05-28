@@ -1,4 +1,4 @@
-FROM certbot/certbot:v1.26.0
+FROM certbot/certbot:v1.27.0
 
 RUN wget -O /usr/bin/tickerd https://github.com/josh/tickerd/releases/latest/download/tickerd-linux-amd64 && chmod +x /usr/bin/tickerd
 ENV TICKERD_HEALTHCHECK_PORT 9000
