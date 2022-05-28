@@ -2,11 +2,25 @@ name: Docker
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
+  pull_request:
 
 jobs:
-  push:
+  build:
     runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Build image
+        run: docker build . --file Dockerfile
+
+  publish:
+    needs: build
+
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push'
 
     steps:
       - uses: actions/checkout@v3
@@ -20,6 +34,7 @@ jobs:
       - name: Push image
         run: |
           IMAGE_ID=ghcr.io/${{ github.repository }}
+          VERSION=latest
 
-          docker tag image $IMAGE_ID:latest
-          docker push $IMAGE_ID:latest
+          docker tag image $IMAGE_ID:$VERSION
+          docker push $IMAGE_ID:$VERSION
